@@ -1,0 +1,14 @@
+{
+  "name": "stock-analysis",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/Linghucong1999/StockPulse.git",
+  "author": "mika <2865911620@qq.com>",
+  "license": "MIT",
+  "dependencies": {
+    "animejs": "3.2.2",
+    "echarts": "5.5.0",
+    "element-plus": "2.7.0",
+    "vue": "3.4.27"
+  }
+}

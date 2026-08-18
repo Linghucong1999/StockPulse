@@ -21,15 +21,15 @@
 
 ## 🛠 技术栈
 
-- 前端：**Vue 3 + Element Plus + animejs + echarts**（本地 vendor，离线可用）
+- 前端：**Vue 3 + Element Plus + animejs + echarts**（通过 **yarn** 管理，依赖本地化于项目 `node_modules/`）
 - 后端：**Python 标准库**（http.server 本地代理，转发行情 API + 爬取新闻正文）
 - 数据源：Yahoo Finance 行情（通过本地代理绕过 CORS）、Yahoo 新闻
 
 ## 🚀 快速开始
 
 ```bash
-# 1. 进入项目目录
-cd stock-analysis
+# 1. 安装前端依赖（首次）
+yarn install
 
 # 2. 启动本地服务器（默认 127.0.0.1:5173）
 python server.py
@@ -38,7 +38,7 @@ python server.py
 http://localhost:5173
 ```
 
-> 无需安装任何依赖（纯 Python 标准库 + CDN 本地化前端）。
+> 后端无第三方依赖（纯 Python 标准库）；前端依赖由 yarn 管理并本地化于 `node_modules/`。
 
 ## 📁 项目结构
 
@@ -48,14 +48,15 @@ stock-analysis/
 ├── index.html               # 页面入口（布局骨架）
 ├── style.css                # 全局样式（深色紫色主题）
 ├── app.js                   # 根组件：状态管理 + 数据加载
+├── package.json / yarn.lock # 前端依赖（yarn 管理）
+├── node_modules/            # 前端依赖（本地化）
 ├── components/
 │   ├── header.js            # 顶部导航（品牌 + 菜单 + 移动端菜单按钮）
 │   ├── aside.js             # 侧边栏（el-menu 分组：A股/美股/港股 + 搜索结果）
 │   ├── main.js              # 主内容（详情/统计/K线/直方图/热力图）
 │   └── newslist.js          # 公司新闻（列表 + 站内抽屉查看正文）
-├── crawler/
-│   └── news_crawler.py      # 新闻爬虫（标题 + 正文段落提取）
-└── vendor/                  # 本地前端库（vue/element-plus/animejs/echarts）
+└── crawler/
+    └── news_crawler.py      # 新闻爬虫（标题 + 正文段落提取）
 ```
 
 ## 📊 统计面板说明

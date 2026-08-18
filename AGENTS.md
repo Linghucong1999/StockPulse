@@ -1,5 +1,10 @@
 # AGENTS.md — StockPulse 项目规范
 
+## Git 提交时机（必须遵守）
+
+- **不主动执行 git 提交/推送动作**——除非用户明确要求"提交 / 推送 / 上传"等，否则只修改代码不提交
+- 用户要求提交时，严格遵循下方 Conventional Commits 规范
+
 ## Git 提交规范（必须遵守）
 
 所有提交必须使用 **Conventional Commits 规范**，格式：
@@ -38,5 +43,5 @@ docs: 添加项目README
 ## 其他约定
 
 - 本地服务器：`python server.py`（127.0.0.1:5173）
-- 不在提交中包含：`tools/`（cloudflared）、`__pycache__/`、`*.pyc`（已加入 .gitignore）
-- 前端依赖本地化于 `vendor/`，无需 npm install
+- 前端依赖：yarn 管理（`yarn install`），本地化于 `node_modules/`，不在提交中包含（由 yarn.lock 还原）
+- 不在提交中包含：`tools/`（cloudflared）、`__pycache__/`、`*.pyc`、`node_modules/`（已加入 .gitignore）

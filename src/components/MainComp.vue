@@ -129,6 +129,7 @@ function renderChart() {
 
   chart.setOption({
     animationDuration: 400,
+    animationDurationUpdate: 0,
     backgroundColor: 'transparent',
     tooltip: {
       trigger: 'axis', axisPointer: { type: 'cross' },
@@ -136,14 +137,14 @@ function renderChart() {
       textStyle: { color: '#f4f4f8' },
       formatter: (params) => {
         const p = params[0]
-        const d = new Date(candles[p.dataIndex].t).toLocaleString('zh-CN')
+        const d = dates[p.dataIndex] || ''
         let s = `<b>${d}</b><br/>`
         for (const item of params) {
           if (item.seriesType === 'candlestick') {
             const k = candles[item.dataIndex]
             s += `开盘 ${k.o.toFixed(2)}　收盘 <b>${k.c.toFixed(2)}</b><br/>最高 ${k.h.toFixed(2)}　最低 ${k.l.toFixed(2)}<br/>成交量 ${fmtVol(k.v)}`
-          } else if (item.seriesType === 'line' && item.seriesName !== 'MACD') {
-            s += `${item.seriesName} ${item.value.toFixed(2)}<br/>`
+          } else if (item.seriesType === 'line' && item.value != null) {
+            s += `${item.seriesName} ${Number(item.value).toFixed(2)}<br/>`
           }
         }
         return s
@@ -343,6 +344,19 @@ onBeforeUnmount(() => {
           </div>
         </div>
 
+        <div class="chart-wrap">
+          <div class="chart-tabs">
+            <el-radio-group :model-value="period" size="small" @change="$emit('period-change', $event)">
+              <el-radio-button v-for="p in periods" :key="p.key" :value="p.key">{{ p.label }}</el-radio-button>
+            </el-radio-group>
+          </div>
+          <div id="kchart" class="kchart"></div>
+          <div class="chart-note">
+            <span class="legend ma5">均线MA5</span><span class="legend ma20">均线MA20</span>
+            <span class="legend ma60">均线MA60</span><span class="legend vol">成交量</span>
+          </div>
+        </div>
+
         <div class="stats-section" id="stats">
           <div class="panel-title">统计学证据</div>
           <div class="stats-row">
@@ -433,19 +447,6 @@ onBeforeUnmount(() => {
             <div class="advice-note">长期评分(0-4)：中期趋势/波动率/回撤/区间涨跌；短期评分(0-4)：短均线/MACD/RSI。仅供参考，不构成投资建议</div>
           </div>
           <div class="stat-foot">指标基于当前周期 K 线数据实时计算</div>
-        </div>
-
-        <div class="chart-wrap">
-          <div class="chart-tabs">
-            <el-radio-group :model-value="period" size="small" @change="$emit('period-change', $event)">
-              <el-radio-button v-for="p in periods" :key="p.key" :value="p.key">{{ p.label }}</el-radio-button>
-            </el-radio-group>
-          </div>
-          <div id="kchart" class="kchart"></div>
-          <div class="chart-note">
-            <span class="legend ma5">均线MA5</span><span class="legend ma20">均线MA20</span>
-            <span class="legend ma60">均线MA60</span><span class="legend vol">成交量</span>
-          </div>
         </div>
 
         <NewsPanelComp :news="news" :symbol="meta.symbol" :loading="newsLoading" />

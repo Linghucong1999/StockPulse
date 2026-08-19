@@ -42,6 +42,6 @@ docs: 添加项目README
 
 ## 其他约定
 
-- 本地服务器：`python server.py`（127.0.0.1:5173）
+- 前后端分离：后端 `stockpulse-backend/`（`python server.py`，端口 8000）；前端 `stock-analysis/`（`yarn dev`，Vite 5173，代理 /api → 8000）
 - 前端依赖：yarn 管理（`yarn install`），本地化于 `node_modules/`，不在提交中包含（由 yarn.lock 还原）
 - 不在提交中包含：`tools/`（cloudflared）、`__pycache__/`、`*.pyc`、`node_modules/`（已加入 .gitignore）
